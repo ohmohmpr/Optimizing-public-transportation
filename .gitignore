@@ -1,2 +1,4 @@
 venv
 Me.md
+producers/__pycache__/
+producers/models/__pycache__/
