@@ -18,8 +18,7 @@ class TurnstileHardware:
     def __init__(self, station):
         """Create the Turnstile"""
         self.station = station
-        print(station)
-        # TurnstileHardware._load_data()
+        TurnstileHardware._load_data()
         self.metrics_df = TurnstileHardware.seed_df[
             TurnstileHardware.seed_df["station_id"] == station.station_id
         ]
@@ -66,5 +65,3 @@ class TurnstileHardware:
         # Introduce some randomness in the data
         return max(num_entries + random.choice(range(-5, 5)), 0)
 
-
-test1 = TurnstileHardware()

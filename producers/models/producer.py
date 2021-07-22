@@ -16,10 +16,10 @@ class Producer:
     # Tracks existing topics across all Producer instances
     existing_topics = set([])
 
-    # BROKER_URL = "PLAINTEXT://kafka0:9092"
-    # SCHEMA_REGISTRY_URL = "http://schema-registry:8081/"
-    BROKER_URL = "localhost:9092"
-    SCHEMA_REGISTRY_URL = "localhost:8081/"
+    BROKER_URL = "PLAINTEXT://kafka0:9092"
+    SCHEMA_REGISTRY_URL = "http://schema-registry:8081/"
+    # BROKER_URL = "localhost:9092"
+    # SCHEMA_REGISTRY_URL = "localhost:8081/"
 
     def __init__(
         self,
@@ -49,6 +49,7 @@ class Producer:
             # TODO
             # TODO
             # https://github.com/confluentinc/confluent-kafka-python/issues/137
+            # 2/24
         }
         
 
@@ -58,10 +59,10 @@ class Producer:
             Producer.existing_topics.add(self.topic_name)
 
         # TODO: Configure the AvroProducer
-        # self.producer = AvroProducer({
-        #     "bootstrap.servers": self.BROKER_URL, 
-        #     "schema.registry.url": self.SCHEMA_REGISTRY_URL
-        # })
+        self.producer = AvroProducer({
+            "bootstrap.servers": self.BROKER_URL, 
+            "schema.registry.url": self.SCHEMA_REGISTRY_URL
+        })
 
     def create_topic(self):
         """Creates the producer topic if it does not already exist"""
@@ -88,11 +89,10 @@ class Producer:
         # TODO: Write cleanup code for the Producer here
         #
         #
+        self.producer.flush()
         logger.info("producer close incomplete - skipping")
         # https://github.com/confluentinc/confluent-kafka-python/issues/137
 
     def time_millis(self):
         """Use this function to get the key for Kafka Events"""
         return int(round(time.time() * 1000))
-
-Producer("test", "test")
